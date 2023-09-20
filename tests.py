@@ -26,6 +26,7 @@ def test_set_book_genre(book_collector):
 
 
 #проверка списка книг по выбранному жанру
+
 def test_get_books_with_specific_genre(book_collector):
     book_collector.add_new_book('Гарри Поттер')
     book_collector.add_new_book('Властелин Колец')
@@ -48,7 +49,7 @@ def test_get_books_for_children(book_collector):
     book_collector.set_book_genre('Колобок', 'Детектив')
 
     children_book = book_collector.get_books_for_children()
-    assert 'Красная шапочка' in children_book
+    assert 'Красная шапочка' in children_book and 'Колобок' not in children_book
 
 # проверка на добавление книги в избранное из словаря books_genre  и проверка на вывод списка избранного
 @pytest.mark.parametrize('book_name', ['Винни Пух', 'Буратино'])
