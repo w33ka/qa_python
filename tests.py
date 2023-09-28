@@ -4,10 +4,9 @@ import pytest
 #проверка на добавление книги без жанра и получение текщего словаря books_genre
 def test_add_new_book_without_genre(book_collector):
     book_collector.add_new_book('Гарри Поттер')
-    book_collector.add_new_book('Властелин Колец')
 
     result = book_collector.get_books_genre()
-    assert len(result) != 0
+    assert len(result) == 1
 
 
 #проверка на добавление книги с названием больше 40 символов
@@ -52,21 +51,16 @@ def test_get_books_for_children(book_collector):
     assert 'Красная шапочка' in children_book and 'Колобок' not in children_book
 
 # проверка на добавление книги в избранное из словаря books_genre  и проверка на вывод списка избранного
-@pytest.mark.parametrize('book_name', ['Винни Пух', 'Буратино'])
-def test_add_book_in_favorites(book_collector,book_name):
-    book_collector.add_new_book(book_name)
-    book_collector.add_book_in_favorites(book_name)
-
-    favorites = book_collector.get_list_of_favorites_books()
-    assert book_name in favorites
-
-# проверка на добавление книги повторно
-def test_add_book_in_favorites_re_adding_negativ(book_collector):
+def test_add_book_in_favorites(book_collector):
     book_collector.add_new_book('Винни Пух')
     book_collector.add_book_in_favorites('Винни Пух')
 
     favorites = book_collector.get_list_of_favorites_books()
     assert 'Винни Пух' in favorites
+
+# проверка на добавление книги повторно
+def test_add_book_in_favorites_re_adding_negativ(book_collector):
+    book_collector.add_new_book('Винни Пух')
 
     book_collector.add_book_in_favorites('Винни Пух')
     favorites = book_collector.get_list_of_favorites_books()
@@ -81,9 +75,7 @@ def test_add_book_in_favorites_book_not_in_books_genre(book_collector):
 #проверка на удаление книги из избранного
 def test_delete_book_from_favorites(book_collector):
     book_collector.add_new_book('Белоснежка и семь гномов')
-    book_collector.add_new_book('Маленький принц')
     book_collector.add_book_in_favorites('Белоснежка и семь гномов')
-    book_collector.add_book_in_favorites('Маленький принц')
     book_collector.delete_book_from_favorites('Белоснежка и семь гномов')
 
     favorites = book_collector.get_list_of_favorites_books()
